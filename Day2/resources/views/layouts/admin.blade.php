@@ -20,25 +20,10 @@
 
         <!-- Main Content -->
         <main class="container-fluid p-4">
-            <header class="d-flex justify-content-between mb-3">
-                <!-- Hello User -->
-                <div>
-                    @auth
-                        <span class="text-muted">Xin chào, {{ Auth::user()->name }}</span>
-                    @endauth
-                </div>
 
-                <!-- Logout Button -->
-                @auth
-                    <div>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
-                        </form>
-                    </div>
-                @endauth
-            </header>
-
+            {{-- Header --}}
+               @include('partials.header')
+               
             <!-- Content Area -->
             <section class="main-content">
                 @yield('content')
@@ -48,7 +33,7 @@
 
     <!-- Footer -->
     <footer class="bg-light text-center py-3 mt-4">
-        <p class="mb-0">© 2025 Admin Panel</p>
+        @include('partials.footer')
     </footer>
 
     <!-- Thêm Bootstrap JS -->
