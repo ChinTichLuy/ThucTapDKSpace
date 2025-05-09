@@ -36,7 +36,6 @@ class AppServiceProvider extends ServiceProvider
             };
         });
 
-        // Optional binding, only if not already bound
         $this->app->bindIf(TranslatorInterface::class, function () {
             return new EnglishTranslator();
         });

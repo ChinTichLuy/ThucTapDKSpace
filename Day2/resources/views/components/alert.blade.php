@@ -1,4 +1,4 @@
-@props(['type' => 'danger', 'message' => ''])
+@props(['type' => 'success', 'message' => 'Thành Công'])
 
 <div class="alert alert-{{ $type }}">
     {{ $message }}

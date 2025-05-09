@@ -46,7 +46,7 @@ class LessonController extends Controller
             // Dùng leftJoin để đảm bảo rằng các bài học không có bình luận cũng sẽ được đưa vào kết quả
             ->leftJoin('comments', function ($join) {
                 $join->on('lessons.id', '=', 'comments.commentable_id') // Ghép bài học với comment dựa vào commentable_id
-                    ->where('comments.commentable_type', '=', 'Lesson'); // Lọc ra chỉ những comment thuộc loại Lesson
+                    ->where('comments.commentable_type', '=', 'App\Models\Lesson'); // Lọc ra chỉ những comment thuộc loại Lesson
             })
             ->select(
                 'lessons.id',   // Lấy ID của bài học
