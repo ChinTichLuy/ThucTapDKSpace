@@ -10,6 +10,9 @@ class Tag extends Model
     /** @use HasFactory<\Database\Factories\TagFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
     public function lessons()
     {
         return $this->belongsToMany(Lesson::class)->withTimestamps();
