@@ -35,7 +35,7 @@ class AuthController extends Controller
         // Tự đăng nhập sau khi đăng ký
         Auth::login($user); // Laravel lưu session đăng nhập cho user
 
-        return redirect('/dashboard')->with('success', 'Chào mừng đến với Dashboard!');
+        return redirect('/dashboard');
     }
 
     // Hiển thị form đăng nhập
