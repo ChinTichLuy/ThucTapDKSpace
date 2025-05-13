@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -37,7 +38,7 @@ class PostController extends Controller
             'content' => 'required',
         ]);
 
-        Auth::user()->posts()->create($request->only('title', 'content'));
+        $request->user()->posts()->create($request->only('title', 'content'));
 
         return redirect()->route('posts.index')->with('success', 'Tạo mới bài viết thành công!');
     }
@@ -66,6 +67,8 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
+        // Gate::authorize('update-post', $post);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
@@ -73,7 +76,7 @@ class PostController extends Controller
 
         $post->update($request->only('title', 'content'));
 
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+        return redirect()->route('posts.index')->with('success', 'Cập nhật thành công!');
     }
 
     /**
@@ -82,8 +85,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
+        //  Gate::authorize('destroy-post', $post);
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        return redirect()->route('posts.index')->with('success', 'Xóa thành công!');
     }
 }

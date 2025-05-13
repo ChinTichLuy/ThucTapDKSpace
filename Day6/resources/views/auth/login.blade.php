@@ -3,17 +3,16 @@
 @section('content')
     <div class="container mt-5">
         <h2 class="mb-4">Đăng nhập</h2>
-        @if (session('status'))
-            <div class="alert alert-success">{{ session('status') }}</div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                {{ $errors->first() }}
+            </div>
         @endif
         <form action="{{ url('/login') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label>Email</label>
                 <input type="email" name="email" class="form-control" value="{{ old('email') }}">
-                @error('email')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
             </div>
 
             <div class="mb-3">

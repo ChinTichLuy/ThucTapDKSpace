@@ -9,18 +9,21 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h4>{{ $post->title }}</h4>
-                    <p>{{ Str::limit($post->content, 150) }}</p>
+                    <p>{{ Str::limit($post->content, 20) }}</p>
                     <p><small>By {{ $post->user->name }}</small></p>
 
                     <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-outline-info">View</a>
 
                     @can('update', $post)
+                        {{-- @can('update-post', $post) --}}
                         <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
                     @endcan
 
                     @can('delete', $post)
+                        {{-- @can('destroy-post', $post) --}}
                         <form method="POST" action="{{ route('posts.destroy', $post) }}" class="d-inline">
-                            @csrf @method('DELETE')
+                            @csrf
+                            @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                         </form>
                     @endcan

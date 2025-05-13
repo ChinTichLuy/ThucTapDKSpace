@@ -27,12 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Gate thủ công
-        Gate::define('edit-post', function ($user, $post) {
-            return $user->id === $post->user_id || $user->is_admin;
+        Gate::define('update-post', function ($user, $post) {
+            return $user->id ===  $post->user_id || $user->isAdmin();
         });
 
          Gate::define('destroy-post', function ($user, $post) {
-            return $user->id === $post->user_id || $user->is_admin;
+            return $user->id === $post->user_id || $user->isAdmin();
         });
     }
 }

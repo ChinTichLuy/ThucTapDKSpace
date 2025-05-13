@@ -35,7 +35,7 @@ class AuthController extends Controller
         // Tự đăng nhập sau khi đăng ký
         Auth::login($user); // Laravel lưu session đăng nhập cho user
 
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with('success', 'Chào mừng đến với Dashboard!');
     }
 
     // Hiển thị form đăng nhập
@@ -59,7 +59,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             // Regenerate lại session ID để bảo mật (chống session fixation)
             // session()->regenerate() rất quan trọng: giúp ngăn việc kẻ tấn công giữ session cũ sau khi đăng nhập thành công.
-            return redirect('/dashboard');
+            return redirect('/dashboard')->with('success', 'Chào mừng đến với Dashboard!');
         }
         /*
         Auth::attempt() sẽ:
@@ -68,7 +68,7 @@ class AuthController extends Controller
         */
 
         return back()->withErrors([
-            'email' => 'Email hoặc mật khẩu không đúng.',
+            'error' => 'Email hoặc mật khẩu không đúng.',
         ])->withInput(); //Giữ lại các input đã nhập
     }
 
@@ -79,7 +79,7 @@ class AuthController extends Controller
         $request->session()->invalidate(); //Hủy toàn bộ session hiện tại (đảm bảo user không thể tiếp tục dùng session cũ)
         $request->session()->regenerateToken(); //Tạo lại CSRF token mới (chống tấn công giả mạo sau logout)
 
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Đăng xuất thành công!');
     }
 
     // Hiển thị form yêu cầu reset
@@ -99,8 +99,8 @@ class AuthController extends Controller
 
         // Kiểm tra trạng thái gửi
         return $status === Password::RESET_LINK_SENT
-            ? back()->with('status', 'Gửi email thành công!')
-            : back()->withErrors(['email' => 'Email không tồn tại!']);
+            ? back()->with('success', 'Gửi email thành công!')
+            : back()->withErrors(['error' => 'Email không tồn tại!']);
 
         //Password::RESET_LINK_SENT: là hằng số chứa chuỗi 'passwords.sent'
         // Laravel dùng để so sánh với $status trả về từ Password::sendResetLink().
@@ -135,7 +135,7 @@ class AuthController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect('/login')->with('status', 'Đổi mật khẩu thành công! Vui lòng đăng nhập lại')
-            : back()->withErrors(['email' => ['Đổi mật khẩu Thất bại']]);
+            ? redirect('/login')->with('success', 'Đổi mật khẩu thành công! Vui lòng đăng nhập lại')
+            : back()->withErrors(['error' => ['Đổi mật khẩu Thất bại']]);
     }
 }
